@@ -27,9 +27,9 @@ class WFS_downloader:
         self.CACHE_DIR = tempfile.gettempdir()
         self.offset=0
         self.con = duckdb.connect(database=':memory:')
-        self.con.install_extension("httpfs")
+        # self.con.install_extension("httpfs") # May have to install these as part of the dockerfile
         self.con.load_extension("httpfs")
-        self.con.execute("INSTALL spatial;")
+        # self.con.execute("INSTALL spatial;")
         self.con.execute("LOAD spatial;")
         self.data_geom_column = None
         self.data_crs = None
