@@ -24,7 +24,7 @@ EXPOSE 5000
 # USER app
 
 # Specify the command to run on container start
-WORKDIR ./app
+WORKDIR /app
 # RUN python -c 'import duckdb; con = duckdb.connect(database=":memory:", read_only=False); con.install_extension("httpfs");con.execute("INSTALL spatial;"); con.load_extension("httpfs"); con.execute("LOAD spatial;");'
 
 CMD ["gunicorn","--timeout", "500","--bind","0.0.0.0:5000","--workers","2","app:app"]
