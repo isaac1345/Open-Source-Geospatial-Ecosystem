@@ -9,7 +9,7 @@ COPY requirements.txt .
 
 # Install dependencies
 RUN pip install --no-cache-dir -r requirements.txt
-RUN python -c 'import duckdb; con = duckdb.connect(database=":memory:", read_only=False); con.install_extension("httpfs");con.execute("INSTALL spatial;");'
+# RUN python -c 'import duckdb; con = duckdb.connect(database=":memory:", read_only=False); con.install_extension("httpfs");con.execute("INSTALL spatial;");'
 
 # add app folder contents to WORKDIR
 COPY app ./app
@@ -25,6 +25,6 @@ EXPOSE 5000
 
 # Specify the command to run on container start
 WORKDIR /app
-# RUN python -c 'import duckdb; con = duckdb.connect(database=":memory:", read_only=False); con.install_extension("httpfs");con.execute("INSTALL spatial;"); con.load_extension("httpfs"); con.execute("LOAD spatial;");'
+RUN python -c 'import duckdb; con = duckdb.connect(database=":memory:", read_only=False); con.install_extension("httpfs");con.execute("INSTALL spatial;"); con.load_extension("httpfs"); con.execute("LOAD spatial;");'
 
 CMD ["gunicorn","--timeout", "500","--bind","0.0.0.0:5000","--workers","2","app:app"]
